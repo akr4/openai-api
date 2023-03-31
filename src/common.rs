@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Copy, Clone, Serialize)]
 pub enum Model {
     #[serde(rename = "gpt-3.5-turbo")]
     Gpt35Turbo,
@@ -10,7 +10,7 @@ pub enum Model {
     TextQurie001,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct Usage {
     pub prompt_tokens: i64,
     pub completion_tokens: Option<i64>,

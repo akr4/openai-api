@@ -4,7 +4,7 @@ use tracing::error;
 
 type Result<T> = anyhow::Result<T>;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum MessageRole {
     User,
@@ -12,27 +12,27 @@ pub enum MessageRole {
     Assistant,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Message {
     pub role: MessageRole,
     pub content: String,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct CompletionRequest {
     pub model: Model,
     pub messages: Vec<Message>,
     pub temperature: Option<f32>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct CompletionChoice {
     pub index: i64,
     pub message: Message,
     pub finish_reason: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct CompletionResponse {
     pub id: String,
     pub object: String,

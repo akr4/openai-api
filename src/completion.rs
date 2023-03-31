@@ -4,21 +4,21 @@ use tracing::error;
 
 type Result<T> = anyhow::Result<T>;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 pub struct CompletionRequest {
     pub model: Model,
     pub prompt: String,
     pub temperature: Option<f32>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct CompletionChoice {
     pub index: i64,
     pub text: String,
     pub finish_reason: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct CompletionResponse {
     pub id: String,
     pub object: String,
