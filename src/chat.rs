@@ -1,10 +1,11 @@
-use crate::common::{Model, Usage};
 use serde::{Deserialize, Serialize};
 use tracing::error;
 
+use crate::common::{Model, Usage};
+
 type Result<T> = anyhow::Result<T>;
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum MessageRole {
     User,
