@@ -1,50 +1,7 @@
-# openai-api
-
-Rust client for OpenAI API supporting streaming mode of the chat completion endpoint.
-
-## Getting Started
-
-Add the following to your `Cargo.toml`:
-
-```toml:file=Cargo.toml
-openai-api = { git = "https://github.com/akr4/openai-api.git" }
-```
-
-Put this in your crate root:
-
-```rust
 use std::env;
-use openai_api::chat;
 
-#[tokio::main]
-async fn main() {
-    // create request
-    let request = chat::CompletionRequest {
-        model: openai_api::Model::Gpt35Turbo,
-        temperature: Some(1.0),
-        messages: vec![
-            chat::Message {
-                role: chat::MessageRole::User,
-                content: "Hello".to_string(),
-            }
-        ],
-    };
-
-    // call completion endpoint
-    let response = chat::completion(
-        env::var("OPENAI_API_KEY").expect("environment variable OPENAI_API_KEY is not found."),
-        &request).await.unwrap();
-
-    // show response text
-    println!("{}", response.choices[0].message.content);
-}
-```
-
-### Streaming Mode
-
-```rust
-use std::env;
 use futures_util::StreamExt;
+
 use openai_api::{chat, chat_stream};
 
 #[tokio::main]
@@ -86,4 +43,3 @@ async fn main() {
     // show response text
     println!("\nResponse Text: {response_text}");
 }
-```
