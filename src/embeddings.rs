@@ -30,10 +30,7 @@ pub struct EmbeddingsResponse {
     pub data: Vec<Data>,
 }
 
-pub async fn embedding(
-    api_key: &ApiKey,
-    request: EmbeddingsRequest,
-) -> Result<EmbeddingsResponse> {
+pub async fn embedding(api_key: &ApiKey, request: EmbeddingsRequest) -> Result<EmbeddingsResponse> {
     let client = reqwest::Client::new();
     let res = client
         .post("https://api.openai.com/v1/embeddings")

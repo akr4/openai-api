@@ -1,8 +1,8 @@
 use log::error;
 use serde::{Deserialize, Serialize};
 
-use crate::ApiKey;
 use crate::common::Usage;
+use crate::ApiKey;
 
 type Result<T> = anyhow::Result<T>;
 
@@ -61,10 +61,7 @@ pub struct CompletionResponse {
     pub usage: Usage,
 }
 
-pub async fn completion(
-    api_key: &ApiKey,
-    req: &CompletionRequest,
-) -> Result<CompletionResponse> {
+pub async fn completion(api_key: &ApiKey, req: &CompletionRequest) -> Result<CompletionResponse> {
     let client = reqwest::Client::new();
     let res = client
         .post("https://api.openai.com/v1/chat/completions")

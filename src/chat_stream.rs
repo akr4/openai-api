@@ -6,8 +6,8 @@ use log::debug;
 use reqwest_eventsource::{Event, EventSource};
 use serde::{Deserialize, Serialize};
 
-use crate::ApiKey;
 use crate::chat::{CompletionRequest, Message, Model};
+use crate::ApiKey;
 
 type Result<T> = anyhow::Result<T>;
 
@@ -80,16 +80,20 @@ impl Stream for StreamCompletionResponse {
             }
             Poll::Ready(Some(Ok(Event::Message(message)))) => {
                 debug!("Message: {:#?}", message);
-                let chunk = serde_json::from_str::<CompletionChunkResponse>(&message.data).map_err(|e| {
-                    self.get_mut().es.close();
-                    anyhow::anyhow!("OpenAI API error: {}", e.to_string())
-                })?;
+                let chunk = serde_json::from_str::<CompletionChunkResponse>(&message.data)
+                    .map_err(|e| {
+                        self.get_mut().es.close();
+                        anyhow::anyhow!("OpenAI API error: {}", e.to_string())
+                    })?;
                 debug!("Chunk: {:#?}", chunk);
                 Poll::Ready(Some(Ok(chunk)))
             }
             Poll::Ready(Some(Err(error))) => {
                 self.get_mut().es.close();
-                Poll::Ready(Some(Err(anyhow::anyhow!("OpenAI API error: {}", error.to_string()))))
+                Poll::Ready(Some(Err(anyhow::anyhow!(
+                    "OpenAI API error: {}",
+                    error.to_string()
+                ))))
             }
             Poll::Ready(None) => Poll::Ready(None),
             Poll::Pending => Poll::Pending,
@@ -103,10 +107,12 @@ pub async fn completion(
 ) -> Result<StreamCompletionResponse> {
     let client = reqwest::Client::new();
     let req = StreamCompletionRequest::from(req);
-    let es = EventSource::new(client
-        .post("https://api.openai.com/v1/chat/completions")
-        .header("Authorization", format!("Bearer {}", api_key.as_str()))
-        .json(&req))?;
+    let es = EventSource::new(
+        client
+            .post("https://api.openai.com/v1/chat/completions")
+            .header("Authorization", format!("Bearer {}", api_key.as_str()))
+            .json(&req),
+    )?;
 
     Ok(StreamCompletionResponse::new(es))
 }
