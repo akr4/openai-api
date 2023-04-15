@@ -2,6 +2,12 @@
 
 Rust client for OpenAI API supporting streaming mode of the chat completion endpoint.
 
+## Supported Endpoints
+
+- Completion: post https://api.openai.com/v1/completions
+- Chat Completion: post https://api.openai.com/v1/chat/completions (with streaming mode support)
+- Embeddings: post https://api.openai.com/v1/embeddings
+
 ## Getting Started
 
 Add the following to your `Cargo.toml`:
