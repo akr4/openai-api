@@ -1,6 +1,6 @@
 use std::env;
 
-use openai_api::chat;
+use openai_api::{ApiKey, chat};
 
 #[tokio::main]
 async fn main() {
@@ -18,7 +18,7 @@ async fn main() {
 
     // call completion endpoint
     let response = chat::completion(
-        env::var("OPENAI_API_KEY").expect("environment variable OPENAI_API_KEY is not found."),
+        &ApiKey::new(env::var("OPENAI_API_KEY").expect("environment variable OPENAI_API_KEY is not found.")),
         &request).await.unwrap();
 
     // show response text

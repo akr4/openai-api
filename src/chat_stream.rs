@@ -6,6 +6,7 @@ use log::debug;
 use reqwest_eventsource::{Event, EventSource};
 use serde::{Deserialize, Serialize};
 
+use crate::ApiKey;
 use crate::chat::{CompletionRequest, Message, Model};
 
 type Result<T> = anyhow::Result<T>;
@@ -96,15 +97,15 @@ impl Stream for StreamCompletionResponse {
     }
 }
 
-pub async fn completion<ApiKey: AsRef<str>>(
-    api_key: ApiKey,
+pub async fn completion(
+    api_key: &ApiKey,
     req: &CompletionRequest,
 ) -> Result<StreamCompletionResponse> {
     let client = reqwest::Client::new();
     let req = StreamCompletionRequest::from(req);
     let es = EventSource::new(client
         .post("https://api.openai.com/v1/chat/completions")
-        .header("Authorization", format!("Bearer {}", api_key.as_ref()))
+        .header("Authorization", format!("Bearer {}", api_key.as_str()))
         .json(&req))?;
 
     Ok(StreamCompletionResponse::new(es))

@@ -2,7 +2,7 @@ use std::env;
 
 use futures_util::StreamExt;
 
-use openai_api::{chat, chat_stream};
+use openai_api::{ApiKey, chat, chat_stream};
 
 #[tokio::main]
 async fn main() {
@@ -20,7 +20,7 @@ async fn main() {
 
     // call completion endpoint
     let mut response = chat_stream::completion(
-        env::var("OPENAI_API_KEY").expect("environment variable OPENAI_API_KEY is not found."),
+        &ApiKey::new(env::var("OPENAI_API_KEY").expect("environment variable OPENAI_API_KEY is not found.")),
         &request).await.unwrap();
 
     // receive response
