@@ -2,12 +2,11 @@ use std::pin::Pin;
 use std::task::{Context, Poll};
 
 use futures_util::Stream;
+use log::debug;
 use reqwest_eventsource::{Event, EventSource};
 use serde::{Deserialize, Serialize};
-use tracing::debug;
 
-use crate::chat::{CompletionRequest, Message};
-use crate::common::Model;
+use crate::chat::{CompletionRequest, Message, Model};
 
 type Result<T> = anyhow::Result<T>;
 

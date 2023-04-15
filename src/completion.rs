@@ -1,8 +1,24 @@
-use crate::common::{Model, Usage};
+use log::error;
 use serde::{Deserialize, Serialize};
-use tracing::error;
+
+use crate::common::Usage;
 
 type Result<T> = anyhow::Result<T>;
+
+/// https://platform.openai.com/docs/models/model-endpoint-compatibility
+#[derive(Debug, Copy, Clone, Serialize)]
+pub enum Model {
+    #[serde(rename = "text-davinci-003")]
+    TextDavinci003,
+    #[serde(rename = "text-davinci-002")]
+    TextDavinci002,
+    #[serde(rename = "text-curie-001")]
+    TextCurie001,
+    #[serde(rename = "text-babbage-001")]
+    TextBabbage001,
+    #[serde(rename = "text-ada-001")]
+    TextAda001,
+}
 
 #[derive(Debug, Clone, Serialize)]
 pub struct CompletionRequest {

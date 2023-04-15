@@ -1,13 +1,16 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(Debug, Copy, Clone, Serialize)]
-pub enum Model {
-    #[serde(rename = "gpt-3.5-turbo")]
-    Gpt35Turbo,
-    #[serde(rename = "text-davinci-003")]
-    TextDavinci003,
-    #[serde(rename = "text-curie-001")]
-    TextQurie001,
+#[derive(Debug, Clone)]
+pub struct ApiKey(String);
+
+impl ApiKey {
+    pub fn new<S: Into<String>>(api_key: S) -> Self {
+        Self(api_key.into())
+    }
+
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
 }
 
 #[derive(Debug, Clone, Deserialize)]

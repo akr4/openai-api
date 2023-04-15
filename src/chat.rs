@@ -1,9 +1,26 @@
+use log::error;
 use serde::{Deserialize, Serialize};
-use tracing::error;
 
-use crate::common::{Model, Usage};
+use crate::common::Usage;
 
 type Result<T> = anyhow::Result<T>;
+
+/// https://platform.openai.com/docs/models/model-endpoint-compatibility
+#[derive(Debug, Copy, Clone, Serialize)]
+pub enum Model {
+    #[serde(rename = "gpt-4")]
+    Gpt4,
+    #[serde(rename = "gpt-4-0314")]
+    Gpt40314,
+    #[serde(rename = "gpt-4-32k")]
+    Gpt432k,
+    #[serde(rename = "gpt-4-32k-0314")]
+    Gpt432k0314,
+    #[serde(rename = "gpt-3.5-turbo")]
+    Gpt35Turbo,
+    #[serde(rename = "gpt-3.5-turbo-0301")]
+    Gpt35Turbo0301,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]

@@ -8,7 +8,7 @@ use openai_api::{chat, chat_stream};
 async fn main() {
     // create request
     let request = chat::CompletionRequest {
-        model: openai_api::Model::Gpt35Turbo,
+        model: chat::Model::Gpt35Turbo,
         temperature: Some(1.0),
         messages: vec![
             chat::Message {
