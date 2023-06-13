@@ -1,8 +1,8 @@
 use log::error;
 use serde::{Deserialize, Serialize};
 
-use crate::common::Usage;
 use crate::ApiKey;
+use crate::common::Usage;
 
 type Result<T> = anyhow::Result<T>;
 
@@ -13,14 +13,24 @@ pub enum Model {
     Gpt4,
     #[serde(rename = "gpt-4-0314")]
     Gpt40314,
+    #[serde(rename = "gpt-4-0613")]
+    Gpt40613,
     #[serde(rename = "gpt-4-32k")]
     Gpt432k,
     #[serde(rename = "gpt-4-32k-0314")]
     Gpt432k0314,
+    #[serde(rename = "gpt-4-32k-0613")]
+    Gpt432k0613,
     #[serde(rename = "gpt-3.5-turbo")]
     Gpt35Turbo,
     #[serde(rename = "gpt-3.5-turbo-0301")]
     Gpt35Turbo0301,
+    #[serde(rename = "gpt-3.5-turbo-16k")]
+    Gpt35Turbo16k,
+    #[serde(rename = "gpt-3.5-turbo-0613")]
+    Gpt35Turbo0613,
+    #[serde(rename = "gpt-3.5-turbo-16k-0613")]
+    Gpt35Turbo16k0613,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
