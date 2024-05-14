@@ -9,6 +9,10 @@ type Result<T> = anyhow::Result<T>;
 /// https://platform.openai.com/docs/models/model-endpoint-compatibility
 #[derive(Debug, Copy, Clone, Serialize)]
 pub enum Model {
+    #[serde(rename = "gpt-4o")]
+    Gpt4O,
+    #[serde(rename = "gpt-4-turbo")]
+    Gpt4Turbo,
     #[serde(rename = "gpt-4")]
     Gpt4,
     #[serde(rename = "gpt-4-0314")]
